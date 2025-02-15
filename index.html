@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TicTacToe</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      href="https://cdn-icons-png.flaticon.com/512/566/566294.png"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <div id="game-container">
+      <h1>Tic Tac Toe</h1>
+
+      <div id="board">
+        <div class="cell" data-row="0" data-col="0"></div>
+        <div class="cell" data-row="0" data-col="1"></div>
+        <div class="cell" data-row="0" data-col="2"></div>
+        <div class="cell" data-row="1" data-col="0"></div>
+        <div class="cell" data-row="1" data-col="1"></div>
+        <div class="cell" data-row="1" data-col="2"></div>
+        <div class="cell" data-row="2" data-col="0"></div>
+        <div class="cell" data-row="2" data-col="1"></div>
+        <div class="cell" data-row="2" data-col="2"></div>
+      </div>
+
+      <div id="modal-overlay"></div>
+
+      <div id="modal" class="modal">
+        <div id="modal-content" class="modal-content">
+          <span id="close" class="close">&times;</span>
+          <p id="winner-message"></p>
+          <button id="reset-button">Reset Game</button>
+        </div>
+      </div>
+    </div>
+    <script src="javascript.js" defer></script>
+  </body>
+</html>
