@@ -9,8 +9,8 @@ let gameOver = false; //track if the game is over or not
 let clickAllowed = true; // Add a flag to control click allowance
 //Handle click event on each cell
 function handleCellClick(event) {
-  if (!clickAllowed) return; // If click is not allowed, do nothing
-  if (gameOver) return; //Don't do anything if the game is over
+  if (!clickAllowed || gameOver) return; // If click is not allowed, do nothing
+  //Don't do anything if the game is over
 
   clickAllowed = false; // Temporarily disable further clicks
 
@@ -41,7 +41,7 @@ function handleCellClick(event) {
       gameOver = true;
       disableInput();
       clickAllowed = true;
-    }, 300);
+    }, 250);
     return;
   }
 
@@ -51,7 +51,7 @@ function handleCellClick(event) {
       gameOver = true;
       disableInput();
       clickAllowed = true;
-    }, 300);
+    }, 250);
     return;
   }
 
@@ -121,9 +121,17 @@ function resetBoard() {
   });
   displayWinnerMessage(""); //clear winner message
   gameOver = false;
+  clickAllowed = true;
   enableInput(); //re-enable user input
+
   const modal = document.getElementById("modal");
+  const overlay = document.getElementById("modal-overlay");
+  modal.classList.remove("show");
   modal.style.display = "none"; // hide the modal when resetting the game
+  overlay.style.display = "none"; //hide the overlay when resetting the game
+
+  // Log the reset state
+  console.log("Game reset: board cleared, modal hidden");
 }
 
 //function to disble user input
@@ -144,6 +152,8 @@ function enableInput() {
 
 //Display the winners message on the screen
 function displayWinnerMessage(message) {
+  if (!message) return; //Ensure the message is valid
+
   const winnerMessageDiv = document.getElementById("winner-message");
   const modal = document.getElementById("modal");
   const modalContent = document.getElementById("modal-content");
@@ -162,13 +172,22 @@ function displayWinnerMessage(message) {
     //"Draw" will be in gray
     modalContent.classList.add("gray");
   }
-  //show the modal
-  modal.classList.add("show");
-  modalContent.classList.add("show");
 
-  //display overlay
-  const overlay = document.getElementById("modal-overlay");
-  overlay.style.display = "block";
+  // Log the message to verify when it should be displayed
+  console.log("Displaying modal with message:", message);
+
+  setTimeout(() => {
+    // Show the modal
+    modal.classList.add("show");
+    modal.style.display = "flex";
+    modalContent.classList.add("show");
+
+    // Display overlay
+    const overlay = document.getElementById("modal-overlay");
+    overlay.style.display = "block";
+    // Log to verify that the modal is being shown
+    console.log("Modal displayed");
+  }, 250); // Adjust the delay time as needed
 }
 
 // Close the modal when the close button is clicked
@@ -184,14 +203,19 @@ document.getElementById("close").addEventListener("click", function () {
   // Hide the overlay
   const overlay = document.getElementById("modal-overlay");
   overlay.style.display = "none";
+
+  // Log to verify that the modal is being closed
+  console.log("Modal closed");
 });
 
 //setting up event listner for each cell
 const cells = document.querySelectorAll(".cell");
 cells.forEach((cell) => {
   cell.addEventListener("click", handleCellClick);
+  console.log("Cell event listener added"); // Log to verify event listeners
 });
 
 //setting up event listner for reset button
 const resetButton = document.getElementById("reset-button");
 resetButton.addEventListener("click", resetBoard);
+console.log("Reset button event listener added"); // Log to verify event listener
